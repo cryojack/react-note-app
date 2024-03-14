@@ -1,45 +1,52 @@
-const SidebarHeader = () => {
-    return (
-        <div className="sidebar-header w100 disp-fl jc-cn ai-cn">
-            <h1>Note Share</h1>
-        </div>
-    )
-}
+import { useContext, useEffect } from "react"
 
-const SidebarList = ({ value = 4 }) => {
-    const categories = []
-    for (let i = 0; i < value; i++) {
-        categories.push(i)
-    }
-    return (
-        <div className="sidebar-list w100 disp-fl fl-dir-col ai-cn">
-            <div className="list-header w100 disp-fl jc-cn ai-cn">
-                <h2>Your categories</h2>
-            </div>
-            <div className="list-categories w100 disp-fl fl-dir-col ai-cn">
-                {categories.map((cat, idx) => (
-                    <div key={idx} className="category disp-fl jc-cn ai-cn">
-                        <h3>This is category {idx + 1}</h3>
-                    </div>
-                ))}
-                {/* <div
-                    key={10}
-                    className="category disp-fl jc-cn ai-cn category-selected"
-                >
-                    <h3>This is category selected</h3>
-                </div> */}
-            </div>
-        </div>
-    )
-}
+// Context
+import { AppContext } from "../App"
+import { Link, Outlet, useParams } from "react-router-dom"
 
 const Sidebar = () => {
+    const { category } = useParams()
+    const { categories, activeCategory, setActiveCategory, getCategory } =
+        useContext(AppContext)
+
+    console.log(activeCategory)
+
     return (
         <>
             <div className="note-sidebar w100 h100 disp-fl fl-dir-col jc-cn ai-cn">
-                <SidebarHeader />
-                <SidebarList />
+                <div className="sidebar-header w100 disp-fl jc-cn ai-cn">
+                    <h1>Note Share</h1>
+                </div>
+                <div className="sidebar-list w100 disp-fl fl-dir-col ai-cn">
+                    <div className="list-header w100 disp-fl jc-cn ai-cn">
+                        <h2>Your categories</h2>
+                    </div>
+                    <div className="list-categories w100 disp-fl fl-dir-col ai-cn">
+                        {categories && categories.length > 0 ? (
+                            categories.map((cat, idx) => (
+                                <Link
+                                    key={idx}
+                                    to={`/${cat["categoryId"]}`}
+                                    className={`${
+                                        cat["categoryId"] == activeCategory ||
+                                        cat["categoryId"] == category
+                                            ? "category disp-fl jc-cn ai-cn category-selected"
+                                            : "category disp-fl jc-cn ai-cn"
+                                    }`}
+                                    onClick={() => {
+                                        setActiveCategory(cat["categoryId"])
+                                    }}
+                                >
+                                    <h3>{cat["categoryName"]}</h3>
+                                </Link>
+                            ))
+                        ) : (
+                            <h3>No Categories</h3>
+                        )}
+                    </div>
+                </div>
             </div>
+            <Outlet />
         </>
     )
 }

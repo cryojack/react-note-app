@@ -1,19 +1,17 @@
-export function createCategory(category, list) {
+const getCategory = (category, list) => {
     if (
         category === undefined ||
-        category === "" ||
         category === null ||
+        category === "" ||
+        category.length < 1 ||
         list.length < 1
-    )
-        return
+    ) {
+        return null
+    }
 
-    if (
-        list.find((cat) => {
-            return cat === category
-        })
-    )
-        return
+    const val = list.filter((l) => category == l["categoryId"])
 
-    list.push(category)
-    console.log(list)
+    return val
 }
+
+export { getCategory }

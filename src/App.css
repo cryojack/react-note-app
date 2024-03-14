@@ -75,6 +75,7 @@ body {
     flex: 5;
     overflow-y: auto;
 }
+
 .category {
     min-width: 90%;
     max-width: 90%;
@@ -84,6 +85,8 @@ body {
     text-align: center;
     border: solid 2px white;
     border-radius: 2px;
+    color: white;
+    text-decoration: none;
     transition: all 0.1s ease-in-out;
     cursor: pointer;
 }
