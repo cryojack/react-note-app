@@ -9,7 +9,7 @@ export const data = [
             noteId: 9001,
             noteTitle:'This is a note',
             noteBody: 'lorem ipsum eh!!',
-            noteCreatedAt: 1709905773496,
+            noteCreatedAt: 1609905773496,
             noteModifiedAt: 1709905773566,
         },
         {

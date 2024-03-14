@@ -1,15 +1,14 @@
+import { Link, Outlet, useParams } from "react-router-dom"
 import { useContext, useEffect } from "react"
 
 // Context
 import { AppContext } from "../App"
-import { Link, Outlet, useParams } from "react-router-dom"
 
+//category disp-fl jc-cn ai-cn
 const Sidebar = () => {
     const { category } = useParams()
-    const { categories, activeCategory, setActiveCategory, getCategory } =
+    const { path, categories, activeCategory, setActiveCategory, getCategory } =
         useContext(AppContext)
-
-    console.log(activeCategory)
 
     return (
         <>
@@ -27,21 +26,24 @@ const Sidebar = () => {
                                 <Link
                                     key={idx}
                                     to={`/${cat["categoryId"]}`}
-                                    className={`${
-                                        cat["categoryId"] == activeCategory ||
-                                        cat["categoryId"] == category
-                                            ? "category disp-fl jc-cn ai-cn category-selected"
-                                            : "category disp-fl jc-cn ai-cn"
+                                    className={`category disp-fl jc-cn ai-cn ${
+                                        (cat["categoryId"] == activeCategory ||
+                                            cat["categoryId"] == category ||
+                                            (path &&
+                                                path == cat["categoryId"])) &&
+                                        "category-selected"
                                     }`}
                                     onClick={() => {
-                                        setActiveCategory(cat["categoryId"])
+                                        setActiveCategory(() => cat)
                                     }}
                                 >
                                     <h3>{cat["categoryName"]}</h3>
                                 </Link>
                             ))
                         ) : (
-                            <h3>No Categories</h3>
+                            <>
+                                <h3>No categories</h3>
+                            </>
                         )}
                     </div>
                 </div>
