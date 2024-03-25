@@ -1,27 +1,37 @@
-const getCategory = (category, list) => {
-    if (
-        category === undefined ||
-        category === null ||
-        category === "" ||
-        category.length < 1 ||
-        list.length < 1
-    ) {
-        return undefined
-    }
+const generateId = (list) => {
+    let id =
+        Math.floor(Math.random() * 9).toString() +
+        "-" +
+        Math.floor(Math.random() * 99).toString() +
+        "-" +
+        Math.floor(Math.random() * 999).toString() +
+        "-" +
+        Math.floor(Math.random() * 9999).toString()
+    do {
+        id =
+            Math.floor(Math.random() * 9).toString() +
+            "-" +
+            Math.floor(Math.random() * 99).toString() +
+            "-" +
+            Math.floor(Math.random() * 999).toString() +
+            "-" +
+            Math.floor(Math.random() * 9999).toString()
+    } while (list.filter((l) => l["categoryId"] == id).length !== 0)
 
-    const val = list.filter((l) => category == l["categoryId"])
-
-    return val.length > 0 ? val : undefined
+    return id
 }
 
-const getNotes = (category) => {
-    if (category === undefined || category === null || category === "") {
-        return undefined
-    }
+const createCategory = (category, list) => {
+    const slug = generateId(list)
+    const title = category
+    const createdAt = Date.now()
 
-    return category["notes"] && category["notes"].length > 0
-        ? category["notes"]
-        : undefined
+    return {
+        slug: slug,
+        title: title,
+        createdAt: createdAt,
+        notes: [],
+    }
 }
 
-export { getCategory, getNotes }
+export { createCategory }

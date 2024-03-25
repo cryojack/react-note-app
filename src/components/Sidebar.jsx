@@ -1,49 +1,45 @@
+// Core
 import { Link, Outlet, useParams } from "react-router-dom"
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 
 // Context
 import { AppContext } from "../App"
 
-//category disp-fl jc-cn ai-cn
 const Sidebar = () => {
-    const { category } = useParams()
-    const { path, categories, activeCategory, setActiveCategory, getCategory } =
+    const { categories, activeCategory, setActiveCategory } =
         useContext(AppContext)
 
     return (
         <>
             <div className="note-sidebar w100 h100 disp-fl fl-dir-col jc-cn ai-cn">
-                <div className="sidebar-header w100 disp-fl jc-cn ai-cn">
-                    <h1>Note Share</h1>
-                </div>
+                <Link to="/" onClick={() => setActiveCategory(undefined)}>
+                    <div className="sidebar-header w100 disp-fl jc-cn ai-cn">
+                        <h1>Note Share</h1>
+                    </div>
+                </Link>
                 <div className="sidebar-list w100 disp-fl fl-dir-col ai-cn">
                     <div className="list-header w100 disp-fl jc-cn ai-cn">
                         <h2>Your categories</h2>
                     </div>
                     <div className="list-categories w100 disp-fl fl-dir-col ai-cn">
-                        {categories && categories.length > 0 ? (
+                        {categories === undefined ||
+                        categories === null ||
+                        categories.length === 0 ? (
+                            <h3>No categories available</h3>
+                        ) : (
                             categories.map((cat, idx) => (
                                 <Link
                                     key={idx}
-                                    to={`/${cat["categoryId"]}`}
+                                    to={`/${cat?.slug}`}
                                     className={`category disp-fl jc-cn ai-cn ${
-                                        (cat["categoryId"] == activeCategory ||
-                                            cat["categoryId"] == category ||
-                                            (path &&
-                                                path == cat["categoryId"])) &&
+                                        activeCategory?.slug == cat?.slug &&
                                         "category-selected"
                                     }`}
-                                    onClick={() => {
-                                        setActiveCategory(() => cat)
-                                    }}
+                                    onClick={() => setActiveCategory(cat)}
                                 >
-                                    <h3>{cat["categoryName"]}</h3>
+                                    <h3>{cat?.title}</h3>
                                 </Link>
                             ))
-                        ) : (
-                            <>
-                                <h3>No categories</h3>
-                            </>
                         )}
                     </div>
                 </div>
