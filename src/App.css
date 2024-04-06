@@ -162,6 +162,11 @@ a {
     color: rgb(250, 250, 250);
     background-color: rgb(59, 59, 59);
 }
+.category-error {
+    font-size: 22px;
+    font-weight: bold;
+    color: red;
+}
 
 .note-box-header {
     flex: 1;
@@ -191,9 +196,7 @@ a {
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
-.note-card:hover {
-    transform: translateY(-5px) translateX(-5px);
-}
+.note-card:hover { transform: translateY(-5px) translateX(-5px); }
 .card-heading {
     position: relative;
     flex: 1;
@@ -230,4 +233,55 @@ a {
     font-style: italic;
     font-weight: 600;
     color: rgb(95, 95, 95);
+}
+
+.note-title {
+    height: 100px;
+}
+.note-title h1 {
+    font-size: 32px;
+    text-decoration: underline;
+}
+.note-body {
+    width: 95%;
+    height: 75%;
+    padding: 5px;
+    background-color: rgb(240, 240, 240);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.note-body p { font-size: 21px; }
+.note-edit-button {
+    width: 150px;
+    margin: 10px;
+    font-size: 21px;
+    text-align: center;
+    outline: none;
+    border: solid 3px rgb(59, 59, 59);
+    border-radius: 5px;
+    color: rgb(59, 59, 59);
+    background-color: rgb(250, 250, 250);
+    cursor: pointer;
+    transition: 0.1s all ease-in-out;
+}
+.note-edit-button:hover {
+    color: rgb(250, 250, 250);
+    background-color: rgb(59, 59, 59);
+}
+
+.edit-title {
+    width: 80%;
+    padding: 10px;
+    font-size: 32px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.edit-body {
+    width: 95%;
+    height: 75%;
+    padding: 5px;
+    font-size: 21px;
+    resize: none;
+    overflow-x: hidden;
+    overflow-y: auto;
 }

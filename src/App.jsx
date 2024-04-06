@@ -11,7 +11,7 @@ import Note from "./components/Note"
 import EditNote from "./components/EditNote"
 
 // Functions
-import { createCategory } from "./utils/functions"
+import { createCategory, formatTitle, formatDate } from "./utils/functions"
 
 // Data
 import { data } from "./data/data"
@@ -19,8 +19,8 @@ import { data } from "./data/data"
 // Styles
 import "./App.css"
 
-export const AppContext = createContext(null)
 // Context
+export const AppContext = createContext(null)
 
 const App = () => {
     const [categories, setCategories] = useState(data)
@@ -37,6 +37,8 @@ const App = () => {
                 setActiveCategory,
                 setActiveNote,
                 createCategory,
+                formatTitle,
+                formatDate,
             }}
         >
             <div className="note-app-container w100 h100 disp-fl jc-cn ai-cn">

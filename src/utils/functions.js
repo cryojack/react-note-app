@@ -34,4 +34,16 @@ const createCategory = (category, list) => {
     }
 }
 
-export { createCategory }
+const formatTitle = (title) => {
+    if (title.split("").length < 15) {
+        return title
+    } else {
+        return title.split("").splice(0, 15).join("") + "..."
+    }
+}
+
+const formatDate = (date) => {
+    return new Date(date).toString().split(" ").splice(0, 5).join(" ")
+}
+
+export { createCategory, formatTitle, formatDate }

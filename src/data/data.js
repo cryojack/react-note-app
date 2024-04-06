@@ -7,8 +7,8 @@ export const data = [
         notes:[
         {
             noteId: 9001,
-            noteTitle:'This is a note',
-            noteBody: 'lorem ipsum eh!!',
+            noteTitle:'this this this this this this this this this this this this this this this this ',
+            noteBody: 'This is a new age dawned upon us!!',
             noteCreatedAt: 1609905773496,
             noteModifiedAt: 1709905773566,
         },

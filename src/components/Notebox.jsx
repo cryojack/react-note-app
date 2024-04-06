@@ -1,34 +1,31 @@
 // Core
 import { Link, useParams } from "react-router-dom"
+import { useContext } from "react"
+
+// Context
+import { AppContext } from "../App"
 
 const Notebox = ({ data }) => {
     const { category } = useParams()
+    const { activeCategory, setActiveNote, formatDate, formatTitle } =
+        useContext(AppContext)
     return (
         <Link
-            to={"/" + category + "/" + data["noteId"]}
             className="note-card disp-fl fl-dir-col jc-cn ai-cn"
+            to={"/" + activeCategory?.slug + "/" + data["noteId"]}
+            onClick={() => setActiveNote(() => data)}
         >
             <div className="card-heading w100 disp-fl jc-cn ai-cn">
-                <h3>{data["noteTitle"]}</h3>
+                <h3>{formatTitle(data["noteTitle"])}</h3>
                 <button>x</button>
             </div>
             <div className="card-contents w100">{data["noteBody"]}</div>
             <div className="card-options w100 disp-fl fl-dir-col jc-cn ai-cn">
                 <span className="card-created">
-                    Created on{" "}
-                    {new Date(data["noteCreatedAt"])
-                        .toString()
-                        .split(" ")
-                        .splice(0, 5)
-                        .join(" ")}
+                    Created on {formatDate(data["noteCreatedAt"])}
                 </span>
                 <span className="card-modified">
-                    Modified on{" "}
-                    {new Date(data["noteModifiedAt"])
-                        .toString()
-                        .split(" ")
-                        .splice(0, 5)
-                        .join(" ")}
+                    Modified on {formatDate(data["noteModifiedAt"])}
                 </span>
             </div>
         </Link>

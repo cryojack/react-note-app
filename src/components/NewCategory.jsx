@@ -1,5 +1,5 @@
 // Core
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 
 // Context
 import { AppContext } from "../App"
@@ -8,6 +8,16 @@ const NewCategory = () => {
     const { categories, setCategories, createCategory } = useContext(AppContext)
 
     const [newCategoryName, setNewCategoryName] = useState("")
+    const [categoryLengthError, setCategoryLengthError] = useState(false)
+
+    useEffect(() => {
+        if (newCategoryName.length > 16) {
+            setCategoryLengthError(true)
+        } else {
+            setCategoryLengthError(false)
+        }
+    }, [newCategoryName])
+
     return (
         <div className="note-main-content w100 h100">
             <div className="main-content-container w100 h100 disp-fl fl-dir-col jc-cn ai-cn">
@@ -25,8 +35,14 @@ const NewCategory = () => {
                             required
                         />
                     </label>
+                    {categoryLengthError && (
+                        <span className="category-error w100 disp-fl jc-cn ai-cn">
+                            Category name is very long!!
+                        </span>
+                    )}
                     <button
                         className="category-submit"
+                        disabled={categoryLengthError}
                         onClick={(e) => {
                             e.preventDefault()
                             setCategories((prev) => {

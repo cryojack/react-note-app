@@ -6,13 +6,19 @@ import { useContext } from "react"
 import { AppContext } from "../App"
 
 const Sidebar = () => {
-    const { categories, activeCategory, setActiveCategory } =
+    const { categories, activeCategory, setActiveCategory, setActiveNote } =
         useContext(AppContext)
 
     return (
         <>
             <div className="note-sidebar w100 h100 disp-fl fl-dir-col jc-cn ai-cn">
-                <Link to="/" onClick={() => setActiveCategory(undefined)}>
+                <Link
+                    to="/"
+                    onClick={() => {
+                        setActiveCategory(undefined)
+                        setActiveNote(undefined)
+                    }}
+                >
                     <div className="sidebar-header w100 disp-fl jc-cn ai-cn">
                         <h1>Note Share</h1>
                     </div>
@@ -35,7 +41,10 @@ const Sidebar = () => {
                                         activeCategory?.slug == cat?.slug &&
                                         "category-selected"
                                     }`}
-                                    onClick={() => setActiveCategory(cat)}
+                                    onClick={() => {
+                                        setActiveCategory(cat)
+                                        setActiveNote(undefined)
+                                    }}
                                 >
                                     <h3>{cat?.title}</h3>
                                 </Link>
