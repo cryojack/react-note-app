@@ -13,7 +13,7 @@ const Note = () => {
         <div className="note-main-content w100 h100">
             <div className="main-content-container w100 h100 disp-fl fl-dir-col ai-cn">
                 <div className="note-title w100 disp-fl jc-cn ai-cn">
-                    <h1>{formatTitle(activeNote?.noteTitle)}</h1>
+                    <h1>{activeNote?.noteTitle}</h1>
                 </div>
                 <div className="note-body">
                     <p>{activeNote?.noteBody}</p>

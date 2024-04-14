@@ -1,22 +1,14 @@
 // Core
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 
 // Context
 import { AppContext } from "../App"
 
 const NewCategory = () => {
-    const { categories, setCategories, createCategory } = useContext(AppContext)
-
+    const { addNewCategory } = useContext(AppContext)
     const [newCategoryName, setNewCategoryName] = useState("")
-    const [categoryLengthError, setCategoryLengthError] = useState(false)
 
-    useEffect(() => {
-        if (newCategoryName.length > 16) {
-            setCategoryLengthError(true)
-        } else {
-            setCategoryLengthError(false)
-        }
-    }, [newCategoryName])
+    const MAX_CATEGORY_TITLE_LENGTH = 20
 
     return (
         <div className="note-main-content w100 h100">
@@ -35,23 +27,22 @@ const NewCategory = () => {
                             required
                         />
                     </label>
-                    {categoryLengthError && (
+                    {newCategoryName.length > MAX_CATEGORY_TITLE_LENGTH && (
                         <span className="category-error w100 disp-fl jc-cn ai-cn">
                             Category name is very long!!
                         </span>
                     )}
                     <button
                         className="category-submit"
-                        disabled={categoryLengthError}
+                        disabled={
+                            newCategoryName.length >
+                                MAX_CATEGORY_TITLE_LENGTH ||
+                            newCategoryName.length < 1
+                        }
                         onClick={(e) => {
                             e.preventDefault()
-                            setCategories((prev) => {
-                                return [
-                                    ...prev,
-                                    createCategory(newCategoryName, categories),
-                                ]
-                            })
-                            setNewCategoryName(() => "")
+                            addNewCategory(newCategoryName)
+                            setNewCategoryName("")
                             document.getElementById("categoryInput").value = ""
                         }}
                     >

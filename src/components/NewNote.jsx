@@ -5,29 +5,36 @@ import { useContext, useState } from "react"
 // Context
 import { AppContext } from "../App"
 
-const EditNote = () => {
+const NewNote = () => {
     const { note } = useParams()
-    const { activeCategory, activeNote, editNote } = useContext(AppContext)
+    const {
+        categories,
+        setCategories,
+        activeCategory,
+        setActiveCategory,
+        addNewNote,
+    } = useContext(AppContext)
 
-    const [currNote, setCurrNote] = useState(activeNote)
+    const [newNote, setNewNote] = useState({
+        noteTitle: "",
+        noteBody: "",
+    })
 
     const MAX_TITLE_LENGTH = 40
     const MAX_BODY_LENGTH = 3000
 
     const handleTitleChange = (event) => {
-        setCurrNote((prev) => ({
+        setNewNote((prev) => ({
             ...prev,
             [event.target.name]: event.target.value,
-            noteModifiedAt: Date.now(),
         }))
     }
 
     const handleBodyChange = (event) => {
         if (event.target.value.length <= MAX_BODY_LENGTH) {
-            setCurrNote((prev) => ({
+            setNewNote((prev) => ({
                 ...prev,
                 [event.target.name]: event.target.value,
-                noteModifiedAt: Date.now(),
             }))
         }
     }
@@ -41,10 +48,11 @@ const EditNote = () => {
                         name="noteTitle"
                         type="text"
                         autoComplete="off"
-                        value={currNote?.noteTitle}
+                        placeholder="Your title here"
+                        value={newNote.noteTitle}
                         onChange={handleTitleChange}
                     />
-                    {currNote?.noteTitle.length > MAX_TITLE_LENGTH && (
+                    {newNote.noteTitle.length > MAX_TITLE_LENGTH && (
                         <span className="edit-note-title-error w100 disp-fl jc-cn ai-cn">
                             Title cannot exceed {MAX_TITLE_LENGTH} characters!!
                         </span>
@@ -55,32 +63,52 @@ const EditNote = () => {
                         className="edit-body"
                         name="noteBody"
                         autoComplete="off"
-                        value={currNote?.noteBody}
+                        placeholder="Your body here"
+                        value={newNote.noteBody}
                         onChange={handleBodyChange}
                     ></textarea>
                     <span className="edit-note-body-characters">
-                        {MAX_BODY_LENGTH - currNote?.noteBody.length} characters
+                        {MAX_BODY_LENGTH - newNote.noteBody.length} characters
                         remaining
                     </span>
                 </div>
                 <Link
                     to={
-                        currNote?.noteTitle.length <= MAX_TITLE_LENGTH
-                            ? `/${activeCategory?.slug}/${activeNote?.noteId}`
+                        newNote.noteTitle.length <= MAX_TITLE_LENGTH
+                            ? `/${activeCategory?.slug}`
                             : "#"
                     }
                     className="edit-note-button"
                     onClick={() => {
-                        if (currNote?.noteTitle.length <= MAX_TITLE_LENGTH) {
-                            editNote(currNote)
+                        if (newNote.noteTitle.length <= MAX_TITLE_LENGTH) {
+                            if (
+                                newNote.noteTitle.length < 1 ||
+                                newNote.noteTitle == ""
+                            ) {
+                                setNewNote((prev) => ({
+                                    ...prev,
+                                    noteTitle: "Untitled note",
+                                }))
+                            }
+
+                            if (
+                                newNote.noteBody.length < 1 ||
+                                newNote.noteBody == ""
+                            ) {
+                                setNewNote((prev) => ({
+                                    ...prev,
+                                    noteBody: "No body present",
+                                }))
+                            }
+                            addNewNote(newNote)
                         }
                     }}
                 >
-                    Update
+                    Create
                 </Link>
             </div>
         </div>
     )
 }
 
-export default EditNote
+export default NewNote

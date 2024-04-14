@@ -20,18 +20,14 @@ const Category = () => {
                     {activeCategory === undefined ||
                     activeCategory === null ||
                     activeCategory?.notes.length === 0 ? (
-                        <Link
-                            to="new-note"
-                            className="note-card disp-fl fl-dir-col jc-cn ai-cn"
-                        >
-                            <div className="card-heading w100 disp-fl jc-cn ai-cn">
-                                <h3>Create a note</h3>
-                            </div>
-                        </Link>
+                        <Notebox isEmpty={true} />
                     ) : (
                         activeCategory?.notes.map((note, idx) => (
-                            <Notebox key={idx} data={note} />
+                            <Notebox key={idx} data={note} isEmpty={false} />
                         ))
+                    )}
+                    {activeCategory?.notes.length > 0 && (
+                        <Notebox isEmpty={true} />
                     )}
                 </div>
             </div>
